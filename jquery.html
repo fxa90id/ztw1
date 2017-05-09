@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculate Cylinder Volume and Surface</title>
+  <script src="scripts/jquery-3.2.1.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/custom.css">
+  
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-left">
+          <li><a href="index.html">Home Page</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="strona1.html">Bootstrap Components</a></li>
+          <li><a href="strona2.html">More Components</a></li>
+          <li><a href="jquery.html">Calculate Cylinder</a></li>
+          <li><a href="php_and_ajax.html">Calculate Cone</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div class="container">
+    <form class="form form-horizontal">
+      <div class="col-xs-push-2 col-xs-8">
+        <p>Calculate Cylinder Volume nad Surface with jQuery</p>     
+        <div class="row">
+          <div class="col-xs-3">
+            <label for="cylinder_height_id">Height</label>
+          </div>
+          <div class="col-xs-9">
+            <input type="range" id="cylinder_height_id" min="0" max="100" step="1" value="0" data-selector="cylinder_height"><span>0</span>
+          </div>
+        </div> 
+        <div class="row">
+          <div class="col-xs-3">
+            <label for="cylinder_radius_id">Radius</label>
+          </div>
+          <div class="col-xs-9">
+            <input type="range" id="cylinder_radius_id" min="0" max="100" step="1" value="0" data-selector="cylinder_radius"><span>0</span>
+          </div>
+        </div>  
+        <div class="row">
+          <div class="col-xs-3">
+            <label>Volume</label>
+          </div>
+          <div class="col-xs-9">
+            <input type="text" class="form-control" readonly="readonly" data-selector="cylinder_volume">
+          </div>
+        </div>  
+        <div class="row">
+          <div class="col-xs-3">
+            <label>Surface</label>
+          </div>
+          <div class="col-xs-9">
+            <input type="text" class="form-control" readonly="readonly" data-selector="cylinder_surface">
+          </div>
+        </div> 
+        
+        <div>
+          <button class="btn btn-primary" data-selector="calc_cylinder">Calculate</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script type="text/javascript">
+    $(function() {
+
+      var $heightEl = $('[data-selector="cylinder_height"]');
+      var $radiusEl = $('[data-selector="cylinder_radius"]');
+      var $volumeEl = $('[data-selector="cylinder_volume"]');
+      var $surfaceEl = $('[data-selector="cylinder_surface"]');
+
+      $heightEl.on('change', function(e) {
+          var val = $(this).val();
+          $(this).parent().find('span').text(val);
+      });
+      $radiusEl.on('change', function(e) {
+          var val = $(this).val();
+          $(this).parent().find('span').text(val);
+      });
+
+
+      $('[data-selector="calc_cylinder"]').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $height = parseFloat($heightEl.val());
+        var $radius = parseFloat($radiusEl.val());
+
+        var $volume =  Math.PI * $radius * $radius * $height;
+        var $surface = 2 * Math.PI * $radius * ($radius + $height);
+
+        $volume = $volume.toFixed(2);
+        $surface = $surface.toFixed(2);
+
+        $volumeEl.val($volume);
+        $surfaceEl.val($surface);
+      });
+    });
+  </script>
+</body>
+</html>
